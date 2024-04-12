@@ -25,7 +25,7 @@ project.  Required.}
 \item \code{safety}: only creates the safety assessment section of the report
 }}
 
-\item{unique_indentifier}{A character or number. This is the variable name of the
+\item{unique_identifier}{A character or number. This is the variable name of the
 unique identifier in your REDCap project. Commonly the unique id is titled record_id.}
 }
 \value{

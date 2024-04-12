@@ -21,7 +21,7 @@ globalVariables(c("field_type", "variable_field_name"))
 #'   * `All` (the default): creates the full report.
 #'   * `recruitment`: only creates the recruitment section of the report
 #'   * `safety`: only creates the safety assessment section of the report
-#' @param unique_indentifier A character or number. This is the variable name of the
+#' @param unique_identifier A character or number. This is the variable name of the
 #' unique identifier in your REDCap project. Commonly the unique id is titled record_id.
 #'
 #'
