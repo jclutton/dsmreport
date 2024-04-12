@@ -21,6 +21,9 @@ globalVariables(c("field_type", "variable_field_name"))
 #'   * `All` (the default): creates the full report.
 #'   * `recruitment`: only creates the recruitment section of the report
 #'   * `safety`: only creates the safety assessment section of the report
+#' @param unique_indentifier A character or number. This is the variable name of the
+#' unique identifier in your REDCap project. Commonly the unique id is titled record_id.
+#'
 #'
 #' @importFrom REDCapR redcap_read
 #' @importFrom janitor clean_names
@@ -33,6 +36,7 @@ globalVariables(c("field_type", "variable_field_name"))
 #' 20240412: There needs to be a very strict setup in REDCap. AE and violation need
 #' to be repeating instrument. dsmc tool needs to only be in one time point. I need to
 #' check the metadata that the project is setup correctly. Need to build later. JC
+#' 20240412: Also need to build checks for the unique identifier. JC
 #'
 #'
 get_data <- function(token = NULL, redcap_uri = NULL, which_report = NULL, unique_identifier = NULL) {
@@ -71,3 +75,4 @@ get_data <- function(token = NULL, redcap_uri = NULL, which_report = NULL, uniqu
   }
 
 }
+
