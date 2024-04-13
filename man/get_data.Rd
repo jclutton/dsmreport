@@ -29,7 +29,12 @@ project.  Required.}
 unique identifier in your REDCap project. Commonly the unique id is titled record_id.}
 }
 \value{
-A labelled dataframe export of project data
+Dataframes
+\itemize{
+\item \code{df_return}: All relevant data from the REDCap project. This dataframe only contains columns
+necessary for the DSM project. Any other columns are removed
+\item \code{meta_data}: A dataframe with the project's data dictionary
+}
 }
 \description{
 This function uses a REDCap API token to create a labelled data frame. This function heavily relies on
@@ -40,6 +45,8 @@ the work from REDCapR. See \link[REDCapR]{redcap_read}
 20240412: There needs to be a very strict setup in REDCap. AE and violation need
 to be repeating instrument. dsmc tool needs to only be in one time point. I need to
 check the metadata that the project is setup correctly. Need to build later. JC
-20240412: Also need to build checks for the unique identifier. JC
+20240412: Also need to build checks for the unique identifier. Another note is that I could
+rearrage these checks to use the metadata for the project instead of the data. This function
+uses redcap_metadata_read(). JC
 }
 

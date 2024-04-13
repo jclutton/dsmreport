@@ -3,6 +3,5 @@
 export("%>%")
 import(dplyr)
 importFrom(REDCapR,redcap_read)
-importFrom(janitor,clean_names)
 importFrom(magrittr,"%>%")
 importFrom(rio,import)

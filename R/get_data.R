@@ -26,17 +26,21 @@ globalVariables(c("field_type", "variable_field_name"))
 #'
 #'
 #' @importFrom REDCapR redcap_read
-#' @importFrom janitor clean_names
 #' @importFrom rio import
 #' @import dplyr
 #'
-#' @returns A labelled dataframe export of project data
+#' @returns Dataframes
+#'    * `df_return`: All relevant data from the REDCap project. This dataframe only contains columns
+#'    necessary for the DSM project. Any other columns are removed
+#'    * `meta_data`: A dataframe with the project's data dictionary
 #'
 #' @section Notes:
 #' 20240412: There needs to be a very strict setup in REDCap. AE and violation need
 #' to be repeating instrument. dsmc tool needs to only be in one time point. I need to
 #' check the metadata that the project is setup correctly. Need to build later. JC
-#' 20240412: Also need to build checks for the unique identifier. JC
+#' 20240412: Also need to build checks for the unique identifier. Another note is that I could
+#' rearrage these checks to use the metadata for the project instead of the data. This function
+#' uses redcap_metadata_read(). JC
 #'
 #'
 get_data <- function(token = NULL, redcap_uri = NULL, which_report = NULL, unique_identifier = NULL) {
@@ -46,32 +50,26 @@ get_data <- function(token = NULL, redcap_uri = NULL, which_report = NULL, uniqu
                              token = token,
                              raw_or_label = "label")$data
 
-  #Columns of REDCap project
-  df_colnames <- colnames(df)
+  meta_data <- REDCapR::redcap_metadata_read(redcap_uri = redcap_uri,
+                                             token = token)$data
 
   #Columns we want to be in REDCap project
   cols_of_interest <- data_dictionary %>%
-    filter(!field_type %in% c('descriptive','checkbox'))
+    filter(!field_type %in% c('descriptive'))
 
   #Check for missing columns
   missing_columns <- cols_of_interest %>%
-    filter(!variable_field_name %in% df_colnames)
-
-  #Check for checkboxes
-  scrn_race_cols <- c('scrn_race___1', 'scrn_race___2', 'scrn_race___4', 'scrn_race___8', 'scrn_race___16', 'scrn_race___32', 'scrn_race___64', 'scrn_race___256')
-  checkbox_check <- all(scrn_race_cols %in% df_colnames)
+    filter(!variable_field_name %in% meta_data$field_name)
 
   #Check for all necessary variables in the REDCap project
   if(nrow(missing_columns) > 0){
     stop("Your REDCap is missing key variables. The following variables need to be added to your REDCap project. \n\n ",
          paste0("Variable: ",missing_columns$variable_field_name," in Instrument:",missing_columns$form_name,"\n", collapse = " "),".")
-  } else if(!checkbox_check){
-    stop("Your REDCap project is missing the variable scrn_race")
   } else {
     df_return <- df %>%
-      select(cols_of_interest$variable_field_name, scrn_race_cols)
+      select(cols_of_interest$variable_field_name)
 
-    return(df_return)
+    return(list(df_return = df_return, meta_data = meta_data))
   }
 
 }
