@@ -1,12 +1,11 @@
 Package: dsmreport
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Automated Data and Safety Monitor Reporting
+Version: 0.0.0.1
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Jonathan", "Clutton", , "jclutton@kumc.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-3593-4271"))
+Description: Data and safety monitor (DSM) reporting is a necessary, but time-intensive process for clinical trials. We built a tool that integrates flexible REDCap instruments, that naturally fit into the data entry workflow, with an RStudio project. The tool automatically produces data and safety monitor reports, customizable by clinical trial, with features like consort diagrams, enrollment data, and safety analyses, saving time and facilitating better trial quality monitoring..
+License: Creative Commons: CC BY-NC-SA 4.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
@@ -15,8 +14,9 @@ BugReports: https://github.com/jclutton/dsmreport/issues
 Imports: 
     REDCapR,
     rio,
-    janitor,
     dplyr,
-    magrittr
+    magrittr,
+    ggplot2,
+    stringr
 Depends: 
     R (>= 2.10)
